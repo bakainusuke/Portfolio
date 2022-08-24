@@ -30,7 +30,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home username={username} />} />
               <Route path="/login" element={<Login loginUser={loginUser} />} />
-              <Route path="/signup" />
+              <Route path="/signup" element={<Signup />} />
               <Route
                 path="/profile"
                 element={<MyProfile username={username} />}
