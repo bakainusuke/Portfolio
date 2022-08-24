@@ -1,6 +1,3 @@
-import logo from './logo.svg';
-import './App.css';
-
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./fragments/Navbar";
@@ -12,22 +9,33 @@ import Forum from "./pages/Forum";
 import { getUser, removeUser } from "./data/repository";
 
 function App() {
+  const [username, setUsername] = useState(getUser());
+
+  const loginUser = (username) => {
+    setUsername(username);
+  }
+
+  const logoutUser = () => {
+    removeUser();
+    setUsername(null);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="d-flex flex-column min-vh-100">
+      <Router>
+        <Navbar username={username} logoutUser={logoutUser} />
+        <main role="main">
+          <div className="container my-3">
+            <Routes>
+              <Route path="/" element={<Home username={username} />} />
+              <Route path="/login" element={<Login loginUser={loginUser} />} />
+              <Route path="/profile" element={<MyProfile username={username} />} />
+              <Route path="/forum" element={<Forum username={username} />} />
+            </Routes>
+          </div>
+        </main>
+        <Footer />
+      </Router>
     </div>
   );
 }
