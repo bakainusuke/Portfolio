@@ -4,6 +4,7 @@ import Navbar from "./fragments/Navbar";
 import Footer from "./fragments/Footer";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import MyProfile from "./pages/MyProfile";
 import Forum from "./pages/Forum";
 import { getUser, removeUser } from "./data/repository";
@@ -13,15 +14,15 @@ function App() {
 
   const loginUser = (username) => {
     setUsername(username);
-  }
+  };
 
   const logoutUser = () => {
     removeUser();
     setUsername(null);
-  }
+  };
 
   return (
-    <div className="d-flex flex-column min-vh-100">
+    <div className="d-flex flex-column min-vh-100 bg-light">
       <Router>
         <Navbar username={username} logoutUser={logoutUser} />
         <main role="main">
@@ -29,7 +30,11 @@ function App() {
             <Routes>
               <Route path="/" element={<Home username={username} />} />
               <Route path="/login" element={<Login loginUser={loginUser} />} />
-              <Route path="/profile" element={<MyProfile username={username} />} />
+              <Route path="/signup" />
+              <Route
+                path="/profile"
+                element={<MyProfile username={username} />}
+              />
               <Route path="/forum" element={<Forum username={username} />} />
             </Routes>
           </div>

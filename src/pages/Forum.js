@@ -9,7 +9,7 @@ function Forum(props) {
 
   const handleInputChange = (event) => {
     setPost(event.target.value);
-  }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -17,37 +17,58 @@ function Forum(props) {
     // Trim the post text.
     const postTrimmed = post.trim();
 
-    if(postTrimmed === "") {
+    if (postTrimmed === "") {
       setErrorMessage("A post cannot be empty.");
+      return;
+    }
+    if (postTrimmed.length > 256) {
+      setErrorMessage("A post must contain less than 256 Charaters.");
       return;
     }
 
     // Create post.
-    setPosts([ ...posts, { username: props.username, text: postTrimmed }]);
+    setPosts([...posts, { username: props.username, text: postTrimmed }]);
 
     // Reset post content.
     setPost("");
     setErrorMessage("");
-  }
+  };
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <fieldset>
-          <legend>New Post</legend>
-          <div className="form-group">
-            <textarea name="post" id="post" className="form-control" rows="3"
-              value={post} onChange={handleInputChange} />
+          <legend>Post now~</legend>
+          <div className="form-group rounded">
+            <textarea
+              name="post"
+              id="post"
+              className="form-control"
+              rows="3"
+              value={post}
+              onChange={handleInputChange}
+            />
           </div>
-          {errorMessage !== null &&
+          {errorMessage !== null && (
             <div className="form-group">
               <span className="text-danger">{errorMessage}</span>
             </div>
-          }
+          )}
           <div className="form-group">
-            <input type="button" className="btn btn-danger mr-5" value="Cancel"
-              onClick={() => { setPost(""); setErrorMessage(null); }} />
-            <input type="submit" className="btn btn-primary" value="Post" />
+            <input
+              type="button"
+              className="btn btn-danger mr-5"
+              value="Cancel"
+              onClick={() => {
+                setPost("");
+                setErrorMessage(null);
+              }}
+            />
+            <input
+              type="submit"
+              className="btn btn-outline-success"
+              value="Publish"
+            />
           </div>
         </fieldset>
       </form>
@@ -55,17 +76,19 @@ function Forum(props) {
       <hr />
       <h1>Forum</h1>
       <div>
-      {
-        posts.length === 0 ?
+        {posts.length === 0 ? (
           <span className="text-muted">No posts have been submitted.</span>
-          :
-          posts.map((x) =>
-            <div className="border my-3 p-3" style={{ whiteSpace: "pre-wrap" }}>
-              <h3 className="text-primary">{x.username}</h3>
+        ) : (
+          posts.map((x) => (
+            <div
+              className="border my-3 p-3 rounded bg-white"
+              style={{ whiteSpace: "pre-wrap" }}
+            >
+              <h3 className="text-primary ">{x.username}</h3>
               {x.text}
             </div>
-          )
-      }
+          ))
+        )}
       </div>
     </div>
   );
