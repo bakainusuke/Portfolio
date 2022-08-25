@@ -4,19 +4,25 @@ const USER_KEY = "user";
 // Initialise local storage "users" with data, if the data is already set this function returns immediately.
 function initUsers() {
   // Stop if data is already initialised.
-  if(localStorage.getItem(USERS_KEY) !== null)
-    return;
+  if (localStorage.getItem(USERS_KEY) !== null) return;
 
   // User data is hard-coded, passwords are in plain-text.
   const users = [
     {
+      email: "mbolger@rmit.au",
       username: "mbolger",
-      password: "abc123"
+      password: "abc123",
     },
     {
-      username: "shekhar",
-      password: "def456"
-    }
+      email: "huy@rmit.au",
+      username: "huy",
+      password: "123456",
+    },
+    {
+      email: "shekhar@rmit.au",
+      username: "she",
+      password: "def456",
+    },
   ];
 
   // Set data into local storage.
@@ -34,9 +40,8 @@ function getUsers() {
 // NOTE: In this example the login is also persistent as it is stored in local storage.
 function verifyUser(username, password) {
   const users = getUsers();
-  for(const user of users) {
-    if(username === user.username && password === user.password)
-    {
+  for (const user of users) {
+    if (username === user.username && password === user.password) {
       setUser(username);
       return true;
     }
@@ -57,9 +62,4 @@ function removeUser() {
   localStorage.removeItem(USER_KEY);
 }
 
-export {
-  initUsers,
-  verifyUser,
-  getUser,
-  removeUser
-}
+export { initUsers, verifyUser, getUser, removeUser };
