@@ -84,8 +84,8 @@ function Forum(props) {
               className="border my-3 p-3 rounded bg-white col-auto"
               style={{ whiteSpace: "pre-wrap" }}
             >
-              <h3 className="text-primary ">{x.username}</h3>
-              {x.text}
+              <h3 className="text-primary col-auto">{x.username}</h3>
+              <p class="text-md-left">{x.text}</p>
             </div>
           ))
         )}
