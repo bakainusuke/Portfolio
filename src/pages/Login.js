@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { verifyUser } from "../data/repository";
-
 function Login(props) {
   const [fields, setFields] = useState({ username: "", password: "" });
   const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
-
+  const getUserLogin = localStorage.getItem("user")
+    console.log(getUserLogin) 
   // Generic change handler.
   const handleInputChange = (event) => {
     const name = event.target.name;
@@ -24,15 +24,15 @@ function Login(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
+  
     const verified = verifyUser(fields.username, fields.password);
-
+    
     // If verified login the user.
     if(verified === true) {
       props.loginUser(fields.username);
 
       // Navigate to the home page.
-      navigate("/");
+      navigate("/profile");
       return;
     }
 
@@ -44,7 +44,9 @@ function Login(props) {
     // Set error message.
     setErrorMessage("Username and / or password invalid, please try again.");
   }
-
+  const responseGoogle = (response) => {
+    console.log(response);
+  }
   return (
     <div>
       <h1>Login</h1>
@@ -73,6 +75,7 @@ function Login(props) {
           </form>
         </div>
       </div>
+      
     </div>
   );
 }

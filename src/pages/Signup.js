@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
+import { getUnixTime,fromUnixTime  } from 'date-fns'
+import { v4 as uuid } from 'uuid';
+const USER_KEY = "users";
 
 const validate = (values) => {
   const errors = {};
@@ -31,13 +35,19 @@ const validate = (values) => {
   return errors;
 };
 
-const Signup = () => {
+
+
+const Signup = (props) => {
+  const navigate = useNavigate();
+  const unixTime = getUnixTime(Date.now())
   const {
     values,
     errors,
     touched,
     // isSubmitting,
     //handleBlur,
+    setSubmitting,
+    resetForm,
     handleChange,
     handleSubmit,
   } = useFormik({
@@ -48,12 +58,30 @@ const Signup = () => {
       confirmPassword: "",
     },
     validate,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    },
-  });
-  console.log(errors);
+    onSubmit : async (values) => {
+     await  handleSubmitValues(values)
+      setSubmitting(false)
+      resetForm(true)
+      },
+  }); 
+  const handleSubmitValues = async (values) =>{
+    console.log(values)
+    props.loginUser(values.username);
+    let getUser = []
+     getUser = JSON.parse(localStorage.getItem(USER_KEY))
+     console.log(getUser)
+    getUser.push({
+      email: values.email,
+      password:values.password, 
+      username:values.username,
+      dateCreated:unixTime,
+      userId:uuid()
+    })
+    localStorage.setItem(USER_KEY,  JSON.stringify(getUser));
+    localStorage.setItem("user",  values.username);
 
+    navigate("/profile")
+  }
   return (
     <div>
       <h1>Sign Up</h1>
