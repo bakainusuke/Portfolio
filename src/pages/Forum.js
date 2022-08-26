@@ -92,7 +92,7 @@ function Forum(props) {
       <hr />
       <h1>Forum</h1>
       <div>
-        {posts.length === 0 ? (
+        {posts === null ? (
           <span className="text-muted">No posts have been submitted.</span>
         ) : (
           posts.map((x) => (
