@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+.error {
+  color: #fc8181;
+  font-size: 0.75rem;
+  text-align: left;
+  margin-top: 0.25rem;
+}
+form {
+  width: 95%;
+  max-width: 400px;
+  margin: 0 auto;
+}

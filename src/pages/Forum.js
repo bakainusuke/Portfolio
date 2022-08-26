@@ -81,7 +81,7 @@ function Forum(props) {
         ) : (
           posts.map((x) => (
             <div
-              className="border my-3 p-3 rounded bg-white"
+              className="border my-3 p-3 rounded bg-white col-auto"
               style={{ whiteSpace: "pre-wrap" }}
             >
               <h3 className="text-primary ">{x.username}</h3>
