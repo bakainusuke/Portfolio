@@ -100,7 +100,7 @@ const Signup = (props) => {
           dateCreated: unixTime,
         })
       );
-    }, 3000);
+    }, 1500);
   };
   return (
     <div>
