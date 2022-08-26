@@ -5,36 +5,8 @@ import { getUnixTime, fromUnixTime } from "date-fns";
 import { v4 as uuid } from "uuid";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { validate } from "../data/Validation";
 const USER_KEY = "users";
-
-const validate = (values) => {
-  const errors = {};
-  if (!values.username) {
-    errors.username = "Required";
-  } else if (values.username.length > 15) {
-    errors.username = "Must be 15 characters or less";
-  }
-
-  if (!values.email) {
-    errors.email = "Required";
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = "Invalid email address";
-  }
-
-  if (!values.password) {
-    errors.password = "Required";
-  } else if (values.password.length < 6) {
-    errors.password = "Must be 6 characters or more";
-  }
-
-  if (!values.confirmPassword) {
-    errors.confirmPassword = "Required";
-  } else if (values.confirmPassword !== values.password) {
-    errors.password = "Must be the same";
-  }
-
-  return errors;
-};
 
 const Signup = (props) => {
   const notifySuccess = () => {
@@ -54,8 +26,6 @@ const Signup = (props) => {
     values,
     errors,
     touched,
-    // isSubmitting,
-    //handleBlur,
     setSubmitting,
     resetForm,
     handleChange,
@@ -121,7 +91,7 @@ const Signup = (props) => {
                 value={values.name}
               />
               {touched.username && errors.username ? (
-                <div>{errors.username}</div>
+                <span className="text-danger">{errors.username}</span>
               ) : null}
             </div>
 
@@ -136,7 +106,9 @@ const Signup = (props) => {
                 onChange={handleChange}
                 value={values.email}
               />
-              {touched.email && errors.email ? <div>{errors.email}</div> : null}
+              {touched.email && errors.email ? (
+                <span className="text-danger">{errors.email}</span>
+              ) : null}
             </div>
 
             <div class="form-group">
@@ -151,7 +123,7 @@ const Signup = (props) => {
                 value={values.password}
               />
               {touched.password && errors.password ? (
-                <div>{errors.password}</div>
+                <span className="text-danger">{errors.password}</span>
               ) : null}
             </div>
 
@@ -167,7 +139,7 @@ const Signup = (props) => {
                 value={values.confirmPassword}
               />
               {touched.confirmPassword && errors.confirmPassword ? (
-                <div>{errors.confirmPassword}</div>
+                <span className="text-danger">{errors.confirmPassword}</span>
               ) : null}
             </div>
 

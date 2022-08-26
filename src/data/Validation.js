@@ -21,7 +21,7 @@ const validate = (values) => {
   if (!values.confirmPassword) {
     errors.confirmPassword = "Required";
   } else if (values.confirmPassword !== values.password) {
-    errors.password = "Must be the same";
+    errors.confirmPassword = "Must be the same";
   }
 
   return errors;
