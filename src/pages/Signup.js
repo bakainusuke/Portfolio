@@ -55,73 +55,81 @@ const Signup = () => {
   console.log(errors);
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div class="form-group">
-        <label For="username">User Name</label>
-        <input
-          id="username"
-          class="form-control "
-          name="username"
-          type="username"
-          placeholder="Enter your Username"
-          onChange={handleChange}
-          value={values.name}
-        />
-        {touched.username && errors.username ? (
-          <div>{errors.username}</div>
-        ) : null}
-      </div>
+    <div>
+      <h1>Sign Up</h1>
+      <hr />
+      <div className="row">
+        <div className="col-md-6">
+          <form onSubmit={handleSubmit}>
+            <div class="form-group">
+              <label For="username">User Name</label>
+              <input
+                id="username"
+                class="form-control "
+                name="username"
+                type="username"
+                placeholder="Enter your Username"
+                onChange={handleChange}
+                value={values.name}
+              />
+              {touched.username && errors.username ? (
+                <div>{errors.username}</div>
+              ) : null}
+            </div>
 
-      <div class="form-group">
-        <label For="email">Email</label>
-        <input
-          id="email"
-          class="form-control"
-          name="email"
-          type="email"
-          placeholder="Enter your Email"
-          onChange={handleChange}
-          value={values.email}
-        />
-        {touched.email && errors.email ? <div>{errors.email}</div> : null}
-      </div>
+            <div class="form-group">
+              <label For="email">Email</label>
+              <input
+                id="email"
+                class="form-control"
+                name="email"
+                type="email"
+                placeholder="Enter your Email"
+                onChange={handleChange}
+                value={values.email}
+              />
+              {touched.email && errors.email ? <div>{errors.email}</div> : null}
+            </div>
 
-      <div class="form-group">
-        <label For="password">Password</label>
-        <input
-          id="password"
-          class="form-control"
-          name="password"
-          type="password"
-          placeholder="Enter your password"
-          onChange={handleChange}
-          value={values.password}
-        />
-        {touched.password && errors.password ? (
-          <div>{errors.password}</div>
-        ) : null}
-      </div>
+            <div class="form-group">
+              <label For="password">Password</label>
+              <input
+                id="password"
+                class="form-control"
+                name="password"
+                type="password"
+                placeholder="Enter your password"
+                onChange={handleChange}
+                value={values.password}
+              />
+              {touched.password && errors.password ? (
+                <div>{errors.password}</div>
+              ) : null}
+            </div>
 
-      <div class="form-group">
-        <label For="confirmPassword">Password</label>
-        <input
-          id="confirmPassword"
-          class="form-control"
-          name="confirmPassword"
-          type="password"
-          placeholder="Renter your password"
-          onChange={handleChange}
-          value={values.confirmPassword}
-        />
-        {touched.confirmPassword && errors.confirmPassword ? (
-          <div>{errors.confirmPassword}</div>
-        ) : null}
-      </div>
+            <div class="form-group">
+              <label For="confirmPassword">Password</label>
+              <input
+                id="confirmPassword"
+                class="form-control"
+                name="confirmPassword"
+                type="password"
+                placeholder="Renter your password"
+                onChange={handleChange}
+                value={values.confirmPassword}
+              />
+              {touched.confirmPassword && errors.confirmPassword ? (
+                <div>{errors.confirmPassword}</div>
+              ) : null}
+            </div>
 
-      <button type="submit" class="btn btn-primary">
-        Register
-      </button>
-    </form>
+            <button type="submit" class="btn btn-primary">
+              Register
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 };
 
