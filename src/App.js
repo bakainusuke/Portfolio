@@ -13,9 +13,9 @@ function App() {
   const [username, setUsername] = useState(getUser());
   console.log(username)
   const loginUser = (username) => {
+
     setUsername(username);
   };
-
   const logoutUser = () => {
     removeUser();
     setUsername(null);
@@ -33,9 +33,9 @@ function App() {
               <Route path="/signup" element={username !== null ? <Navigate to="/" />: <Signup loginUser={loginUser} />} />
               <Route
                 path="/profile"
-                element={<MyProfile username={username} />}
+                element={ <MyProfile username={username} />}
               />
-              <Route path="/forum" element={<Forum username={username} />} />
+              <Route path="/forum" element={ <Forum username={username} />} />
             </Routes>
           </div>
         </main>

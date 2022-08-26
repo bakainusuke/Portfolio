@@ -9,24 +9,23 @@ function initUsers() {
   // User data is hard-coded, passwords are in plain-text.
   const users = [
     {
-      userId:"a225632d-3727-49c6-8697-b6b172d96a43",
+      userId: "a225632d-3727-49c6-8697-b6b172d96a43",
       email: "mbolger@rmit.au",
       username: "mbolger",
       password: "abc123",
     },
     {
-      userId:"f1c6faf1-b5d2-456b-b6e2-e3b80788dcb6",
+      userId: "f1c6faf1-b5d2-456b-b6e2-e3b80788dcb6",
       email: "huy@rmit.au",
       username: "huy",
       password: "123456",
     },
     {
-      userId:"f79f3365-e46d-4151-892b-8011aba920f5",
+      userId: "f79f3365-e46d-4151-892b-8011aba920f5",
       email: "shekhar@rmit.au",
       username: "she",
       password: "def456",
     },
-  
   ];
 
   // Set data into local storage.
@@ -59,11 +58,27 @@ function setUser(username) {
 }
 
 function getUser() {
-  return localStorage.getItem(USER_KEY);
+  let user = localStorage.getItem(USER_KEY);
+  if (user === null) {
+    return null;
+  } else {
+    let praseJSON = JSON.parse(user);
+    console.log(praseJSON.username);
+    return praseJSON.username;
+  }
 }
 
 function removeUser() {
   localStorage.removeItem(USER_KEY);
 }
-
-export { initUsers, verifyUser, getUser, removeUser };
+function getUserFromUsername(username) {
+  let getUser = localStorage.getItem(USERS_KEY);
+  let userPrase = JSON.parse(getUser);
+  console.log(userPrase.length);
+  for (let i = 0; i < userPrase.length; i++) {
+    if (username === userPrase[i].username) {
+      return userPrase[i];
+    }
+  }
+}
+export { initUsers, verifyUser, getUser, removeUser, getUserFromUsername };
