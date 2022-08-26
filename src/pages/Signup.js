@@ -78,8 +78,6 @@ const Signup = (props) => {
     await notifySuccess();
 
     setTimeout(() => {
-      navigate("/profile");
-      props.loginUser(values.username);
       let getUser = [];
       getUser = JSON.parse(localStorage.getItem(USER_KEY));
       let userID = uuid();
@@ -100,7 +98,9 @@ const Signup = (props) => {
           dateCreated: unixTime,
         })
       );
-    }, 1500);
+      navigate("/profile");
+      props.loginUser(values.username);
+    }, 3000);
   };
   return (
     <div>
