@@ -64,7 +64,7 @@ function App() {
               />
               <Route
                 path="/profile"
-                element={<MyProfile username={username} />}
+                element={<MyProfile username={username}  logoutUser={logoutUser}/>}
               />
               <Route path="/forum" element={<Forum username={username} />} />
             </Routes>

@@ -1,14 +1,26 @@
 import { fromUnixTime } from "date-fns";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getUser, removeUser, deleteUser } from "../data/repository";
 
 import { Button, Modal } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 const USER_KEY = "user";
 
 function MyProfile(props) {
   const [deleteShow, setDeShow] = useState(false);
   const [editShow, setEdShow] = useState(false);
+  const [userDetail, setUserDetail] = useState();
+  const [getAllUser, setgetAllUser] = useState();
+  let navigate = useNavigate();
 
+  console.log(userDetail);
+  useEffect(() => {
+    const userData = () => {
+      setgetAllUser(JSON.parse(localStorage.getItem("users")));
+      setUserDetail(JSON.parse(localStorage.getItem(USER_KEY)));
+    };
+    userData();
+  }, []);
   let user = [];
   user = JSON.parse(localStorage.getItem(USER_KEY));
 
@@ -27,6 +39,21 @@ function MyProfile(props) {
     // removeUser();
   };
 
+  const handleChangeUser = (props) => {
+    const indexOfUser = getAllUser.findIndex(
+      (element) => element.userId === userDetail.userId
+    );
+    if (userDetail.password !== undefined) {
+      getAllUser[indexOfUser].password = userDetail.password;
+    }
+    if (userDetail.email !== undefined) {
+      getAllUser[indexOfUser].email = userDetail.email;
+    }
+
+    localStorage.setItem("users", JSON.stringify(getAllUser));
+    navigate('/login')
+    props.logoutUser()
+  };
   return (
     <div className="row">
       <div
@@ -59,7 +86,26 @@ function MyProfile(props) {
                   <Modal.Header closeButton>
                     <Modal.Title>Edit User Details</Modal.Title>
                   </Modal.Header>
-                  <Modal.Body>Edit your details</Modal.Body>
+                  <Modal.Body>
+                    <input
+                      value={userDetail?.email}
+                      onChange={(e) => {
+                        setUserDetail((previous) => ({
+                          ...previous,
+                          email: e.target.value,
+                        }));
+                      }}
+                    />
+                    <input
+                      value={userDetail?.password}
+                      onChange={(e) => {
+                        setUserDetail((previous) => ({
+                          ...previous,
+                          password: e.target.value,
+                        }));
+                      }}
+                    />
+                  </Modal.Body>
                   <Modal.Footer>
                     <Button
                       variant="secondary"
@@ -71,7 +117,10 @@ function MyProfile(props) {
                       type="submit"
                       className="btn btn-success mr-5"
                       value="Confirm"
-                      onClick={(e) => {}}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleChangeUser(props);
+                      }}
                     />
                   </Modal.Footer>
                 </Modal>
