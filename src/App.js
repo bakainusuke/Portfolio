@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Navigate, Route, Routes,  } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
 import Navbar from "./fragments/Navbar";
 import Footer from "./fragments/Footer";
 import Home from "./pages/Home";
@@ -11,9 +16,8 @@ import { getUser, removeUser } from "./data/repository";
 
 function App() {
   const [username, setUsername] = useState(getUser());
-  console.log(username)
+  //console.log(username)
   const loginUser = (username) => {
-
     setUsername(username);
   };
   const logoutUser = () => {
@@ -28,14 +32,41 @@ function App() {
         <main role="main">
           <div className="container my-3">
             <Routes>
-              <Route path="/" element={username === null ? <Navigate to ="/login" /> :  <Home username={username} />} />
-              <Route path="/login" element={ username === null ? <Login loginUser={loginUser} /> : <Navigate to ="/" />} />
-              <Route path="/signup" element={username !== null ? <Navigate to="/" />: <Signup loginUser={loginUser} />} />
+              <Route
+                path="/"
+                element={
+                  username === null ? (
+                    <Navigate to="/login" />
+                  ) : (
+                    <Home username={username} />
+                  )
+                }
+              />
+              <Route
+                path="/login"
+                element={
+                  username === null ? (
+                    <Login loginUser={loginUser} />
+                  ) : (
+                    <Navigate to="/" />
+                  )
+                }
+              />
+              <Route
+                path="/signup"
+                element={
+                  username !== null ? (
+                    <Navigate to="/" />
+                  ) : (
+                    <Signup loginUser={loginUser} />
+                  )
+                }
+              />
               <Route
                 path="/profile"
-                element={ <MyProfile username={username} />}
+                element={<MyProfile username={username} />}
               />
-              <Route path="/forum" element={ <Forum username={username} />} />
+              <Route path="/forum" element={<Forum username={username} />} />
             </Routes>
           </div>
         </main>

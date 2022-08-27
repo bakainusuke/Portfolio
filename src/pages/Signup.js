@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
-import { getUnixTime, fromUnixTime } from "date-fns";
+import { getUnixTime } from "date-fns";
 import { v4 as uuid } from "uuid";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -76,17 +76,21 @@ const Signup = (props) => {
     <div>
       <h1>Sign Up</h1>
       <hr />
-      <div className="row">
+      <div className="row" style={{ width: "1000px" }}>
         <div className="col-md-6">
           <form onSubmit={handleSubmit}>
-            <div class="form-group">
-              <label For="username">User Name</label>
+            <div class="form-group input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" style={{ width: "100px" }}>
+                  <i class="">User Name</i>
+                </span>
+              </div>
               <input
                 id="username"
                 class="form-control "
                 name="username"
                 type="username"
-                placeholder="Enter your Username"
+                placeholder="User name"
                 onChange={handleChange}
                 value={values.name}
               />
@@ -95,14 +99,18 @@ const Signup = (props) => {
               ) : null}
             </div>
 
-            <div class="form-group">
-              <label For="email">Email</label>
+            <div class="form-group input-group">
+              <div class="input-group-prepend ">
+                <span class="input-group-text  " style={{ width: "100px" }}>
+                  <i class="">Email</i>
+                </span>
+              </div>
               <input
                 id="email"
                 class="form-control"
                 name="email"
                 type="email"
-                placeholder="Enter your Email"
+                placeholder="Email address"
                 onChange={handleChange}
                 value={values.email}
               />
@@ -111,14 +119,18 @@ const Signup = (props) => {
               ) : null}
             </div>
 
-            <div class="form-group">
-              <label For="password">Password</label>
+            <div class="form-group input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" style={{ width: "100px" }}>
+                  <i class="">Password</i>
+                </span>
+              </div>
               <input
                 id="password"
                 class="form-control"
                 name="password"
                 type="password"
-                placeholder="Enter your password"
+                placeholder="Create password"
                 onChange={handleChange}
                 value={values.password}
               />
@@ -127,14 +139,18 @@ const Signup = (props) => {
               ) : null}
             </div>
 
-            <div class="form-group">
-              <label For="confirmPassword">Password</label>
+            <div class="form-group input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" style={{ width: "100px" }}>
+                  <i class="">Password</i>
+                </span>
+              </div>
               <input
                 id="confirmPassword"
                 class="form-control"
                 name="confirmPassword"
                 type="password"
-                placeholder="Renter your password"
+                placeholder="Repeat password"
                 onChange={handleChange}
                 value={values.confirmPassword}
               />
@@ -144,7 +160,7 @@ const Signup = (props) => {
             </div>
 
             <button type="submit" class="btn btn-primary">
-              Register
+              Create
             </button>
           </form>
         </div>

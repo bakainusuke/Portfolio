@@ -51,9 +51,9 @@ function Login(props) {
 
     // If verified login the user.
     if (verified === true) {
-      const dataFromuser = getUserFromUsername(fields.username)
+      const dataFromuser = getUserFromUsername(fields.username);
       await notifySuccess();
-       setTimeout(() => {
+      setTimeout(() => {
         localStorage.setItem(
           "user",
           JSON.stringify({
@@ -63,15 +63,15 @@ function Login(props) {
             dateCreated: dataFromuser.dateCreated,
           })
         );
-         navigate("/profile")
-       props.loginUser(fields.username);
+        navigate("/profile");
+        props.loginUser(fields.username);
+      }, 3000);
+      setErrorMessage("");
 
-       }, 3000);
-
-      
       // Navigate to the home page.
     } else {
       notify();
+      setErrorMessage("Username and / or password invalid, please try again.");
     }
 
     // Reset password field to blank.
@@ -80,7 +80,6 @@ function Login(props) {
     setFields(temp);
 
     // Set error message.
-    setErrorMessage("Username and / or password invalid, please try again.");
   };
   const responseGoogle = (response) => {
     console.log(response);
@@ -89,7 +88,7 @@ function Login(props) {
     <div>
       <h1>Login</h1>
       <hr />
-      <div className="row">
+      <div className="row" style={{ width: "1000px" }}>
         <div className="col-md-6">
           <form onSubmit={handleSubmit}>
             <div className="form-group">
