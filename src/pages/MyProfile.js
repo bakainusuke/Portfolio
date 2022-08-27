@@ -74,16 +74,15 @@ function MyProfile(props) {
     }else{
 
       for (let i = 0; i < arrayvalue.length; i++) {
-        userPost.splice(arrayvalue[i], 1);
+        userPost.splice(arrayvalue[i]-i, 1);
       }
-      
       localStorage.setItem(POST_KEY, JSON.stringify(userPost));
     }
   }
   getAllUser.splice(indexOfUser, 1);
     props.logoutUser();
-    localStorage.setItem("users", JSON.stringify(getAllUser));
-    navigate("/login");
+   localStorage.setItem("users", JSON.stringify(getAllUser));
+   navigate("/login");
   };
   console.log(userDetail)
   return (
