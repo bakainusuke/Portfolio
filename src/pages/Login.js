@@ -67,8 +67,6 @@ function Login(props) {
         props.loginUser(fields.username);
       }, 3000);
       setErrorMessage("");
-
-      // Navigate to the home page.
     } else {
       notify();
       setErrorMessage("Username and / or password invalid, please try again.");
