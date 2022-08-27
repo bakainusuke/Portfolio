@@ -10,18 +10,37 @@ function Forum(props) {
   const [errorMessage, setErrorMessage] = useState(null);
   const [indexvalue, setIndexvalue] = useState(null);
   const [indexvalueofReply, setIndexvalueofReply] = useState(null);
-
+  const [selectedFile, setSelectedFile] = useState();
   const [comment, setComment] = useState("");
   const [replyValue, setreplyvalue] = useState("");
   const [posts, setPosts] = useState([]);
   const [update, setUpdate] = useState(false);
+  const [imageurl, setImageUrl] = useState("");
+  const [getUserData, setGetUserData] = useState("");
   useEffect(() => {
     setPosts(JSON.parse(localStorage.getItem(POST_KEY)));
+    setGetUserData(JSON.parse(localStorage.getItem("user")));
   }, [update]);
   const handleInputChange = (event) => {
     setPost(event.target.value);
   };
 
+  const hanldeUpload = async (event) => {
+    const formData = new FormData();
+    formData.append("file", event.target.files[0]);
+    formData.append("upload_preset", "mjejl4ae");
+
+    const result = await fetch(
+      "https://api.cloudinary.com/v1_1/devf3tnbv/image/upload",
+      {
+        mode: "cors",
+        method: "post",
+        body: formData,
+      }
+    ).then((res) => res.json());
+    console.log(result);
+    setImageUrl(result.secure_url);
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -45,17 +64,28 @@ function Forum(props) {
       username: props.username,
       text: postTrimmed,
       postId: uuid(),
+      imageurl: imageurl,
     });
     localStorage.setItem(POST_KEY, JSON.stringify(getPost));
     // Create post.
     if (posts === null || post.length === 0) {
       setPosts([
-        { username: props.username, text: postTrimmed, postId: uuid() },
+        {
+          username: props.username,
+          text: postTrimmed,
+          postId: uuid(),
+          imageurl: imageurl,
+        },
       ]);
     } else {
       setPosts((oldArray) => [
         ...oldArray,
-        { username: props.username, text: postTrimmed, postId: uuid() },
+        {
+          username: props.username,
+          text: postTrimmed,
+          postId: uuid(),
+          imageurl: imageurl,
+        },
       ]);
     }
 
@@ -122,6 +152,13 @@ function Forum(props) {
       setUpdate(update === false ? true : false);
     }
   };
+  const handleDeletePost = (index) => {
+    posts.splice(index.index,1);
+    console.log(posts)
+    localStorage.setItem(POST_KEY, JSON.stringify(posts));
+
+    setUpdate(update === false ? true : false);
+  };
   return (
     <div>
       <form onSubmit={handleSubmit}>
@@ -152,6 +189,7 @@ function Forum(props) {
                 setErrorMessage(null);
               }}
             />
+            <input type="file" onChange={hanldeUpload} />
             <input
               type="submit"
               className="btn btn-outline-success"
@@ -174,8 +212,21 @@ function Forum(props) {
                 className="border my-3 p-3 rounded bg-white col-auto"
                 style={{ whiteSpace: "pre-wrap" }}
               >
+                {x.username === getUserData.username ? (
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleDeletePost({ index: index });
+                    }}
+                  >
+                    Delete Post
+                  </button>
+                ) : null}
                 <h3 className="text-primary col-auto m-3 ">{x.username}</h3>
                 <p className="text-md-left m-5">{x.text}</p>
+                {x.imageurl !== undefined ? (
+                  <img src={x.imageurl} alt="" />
+                ) : null}
                 <hr />
                 <p className="text-warning mt-3 m-4">Reply</p>
 
