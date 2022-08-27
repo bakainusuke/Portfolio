@@ -146,6 +146,7 @@ function Forum(props) {
     setNewImageUrl("");
     setEditPost("");
     setErrorMessage("");
+    setUpdate(update === false ? true : false);
   };
   const handleComment = (postId) => {
     let user = JSON.parse(localStorage.getItem("user"));
@@ -290,7 +291,7 @@ function Forum(props) {
                       className="btn btn-success float-right mr-2"
                       onClick={(e) => {
                         e.preventDefault();
-                        console.log(index);
+
                         setPostIndex(index);
 
                         //handleDeletePost({ index: index });
