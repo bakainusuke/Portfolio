@@ -81,25 +81,5 @@ function getUserFromUsername(username) {
     }
   }
 }
-function deleteUser(userId) {
-  let getUser = localStorage.getItem(USERS_KEY);
-  let userPrase = JSON.parse(getUser);
 
-  for (let i = 0; i < userPrase.length; i++) {
-    if (userId === userPrase[i].userId) {
-      console.log(userPrase[i].userId);
-      //localStorage.removeItem(USERS_KEY);
-      //localStorage.removeItem(USER_KEY);
-      console.log("ok deleted");
-    }
-  }
-}
-
-export {
-  initUsers,
-  verifyUser,
-  getUser,
-  removeUser,
-  getUserFromUsername,
-  deleteUser,
-};
+export { initUsers, verifyUser, getUser, removeUser, getUserFromUsername };

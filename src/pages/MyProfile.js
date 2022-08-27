@@ -1,7 +1,5 @@
 import { fromUnixTime } from "date-fns";
 import React, { useEffect, useState } from "react";
-import { getUser, removeUser, deleteUser } from "../data/repository";
-
 import { Button, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 const USER_KEY = "user";
@@ -35,12 +33,6 @@ function MyProfile(props) {
     }/${result.getFullYear()}`;
   }
 
-  const handleDelete = (userId) => {
-    console.log("delete not done");
-    deleteUser(userId);
-    // removeUser();
-  };
-
   const handleChangeUser = (props) => {
     const indexOfUser = getAllUser.findIndex(
       (element) => element.userId === userDetail.userId
@@ -56,35 +48,33 @@ function MyProfile(props) {
     navigate("/login");
     props.logoutUser();
   };
+
   const handleDeleteUser = (props) => {
     const indexOfUser = getAllUser.findIndex(
       (element) => element.userId === userDetail.userId
     );
     let arrayvalue = [];
-    if(userPost !== undefined && userPost !== null)
-    {
-
-    for (let i = 0; i < userPost.length; i++) {
-      if (userPost[i].username === userDetail.username) {
-        arrayvalue.push(i);
+    if (userPost !== undefined && userPost !== null) {
+      for (let i = 0; i < userPost.length; i++) {
+        if (userPost[i].username === userDetail.username) {
+          arrayvalue.push(i);
+        }
+      }
+      if (parseInt(arrayvalue.length) === parseInt(userPost.length)) {
+        localStorage.clear(POST_KEY);
+      } else {
+        for (let i = 0; i < arrayvalue.length; i++) {
+          userPost.splice(arrayvalue[i] - i, 1);
+        }
+        localStorage.setItem(POST_KEY, JSON.stringify(userPost));
       }
     }
-    if (parseInt(arrayvalue.length) === parseInt(userPost.length)) {
-      localStorage.clear(POST_KEY);
-    }else{
-
-      for (let i = 0; i < arrayvalue.length; i++) {
-        userPost.splice(arrayvalue[i]-i, 1);
-      }
-      localStorage.setItem(POST_KEY, JSON.stringify(userPost));
-    }
-  }
-  getAllUser.splice(indexOfUser, 1);
+    getAllUser.splice(indexOfUser, 1);
     props.logoutUser();
-   localStorage.setItem("users", JSON.stringify(getAllUser));
-   navigate("/login");
+    localStorage.setItem("users", JSON.stringify(getAllUser));
+    navigate("/login");
   };
-  console.log(userDetail)
+  console.log(userDetail);
   return (
     <div className="row">
       <div
@@ -118,24 +108,46 @@ function MyProfile(props) {
                     <Modal.Title>Edit User Details</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <input
-                      value={userDetail?.email}
-                      onChange={(e) => {
-                        setUserDetail((previous) => ({
-                          ...previous,
-                          email: e.target.value,
-                        }));
-                      }}
-                    />
-                    <input
-                      value={userDetail?.password}
-                      onChange={(e) => {
-                        setUserDetail((previous) => ({
-                          ...previous,
-                          password: e.target.value,
-                        }));
-                      }}
-                    />
+                    <div className="form-group input-group">
+                      <div className="input-group-prepend ">
+                        <span
+                          className="input-group-text  "
+                          style={{ width: "100px" }}
+                        >
+                          <i className="">Email</i>
+                        </span>
+                      </div>
+                      {console.log(userDetail?.email)}
+                      <input
+                        value={userDetail?.email}
+                        onChange={(e) => {
+                          setUserDetail((previous) => ({
+                            ...previous,
+                            email: e.target.value,
+                          }));
+                        }}
+                      />
+                    </div>
+                    <div className="form-group input-group">
+                      <div className="input-group-prepend ">
+                        <span
+                          className="input-group-text  "
+                          style={{ width: "100px" }}
+                        >
+                          <i className="">Password</i>
+                        </span>
+                      </div>
+                      <input
+                        type="password"
+                        value={userDetail?.password}
+                        onChange={(e) => {
+                          setUserDetail((previous) => ({
+                            ...previous,
+                            password: e.target.value,
+                          }));
+                        }}
+                      />
+                    </div>
                   </Modal.Body>
                   <Modal.Footer>
                     <Button

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
-import { Image } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 
 const POST_KEY = "posts";
 
@@ -11,19 +11,28 @@ function Forum(props) {
   const [errorMessage, setErrorMessage] = useState(null);
   const [indexvalue, setIndexvalue] = useState(null);
   const [indexvalueofReply, setIndexvalueofReply] = useState(null);
-  const [selectedFile, setSelectedFile] = useState();
   const [comment, setComment] = useState("");
   const [replyValue, setreplyvalue] = useState("");
   const [posts, setPosts] = useState([]);
   const [update, setUpdate] = useState(false);
   const [imageurl, setImageUrl] = useState("");
+  const [newimageurl, setNewImageUrl] = useState("");
   const [getUserData, setGetUserData] = useState("");
+  const [editShow, setEdShow] = useState(false);
+  const [userPost, setgetUserPost] = useState();
+  const [editPost, setEditPost] = useState("");
+  const [postIndex, setPostIndex] = useState();
   useEffect(() => {
     setPosts(JSON.parse(localStorage.getItem(POST_KEY)));
     setGetUserData(JSON.parse(localStorage.getItem("user")));
+    setgetUserPost(JSON.parse(localStorage.getItem(POST_KEY)));
   }, [update]);
   const handleInputChange = (event) => {
     setPost(event.target.value);
+  };
+
+  const handleEditChange = (event) => {
+    setEditPost(event.target.value);
   };
 
   const hanldeUpload = async (event) => {
@@ -94,6 +103,50 @@ function Forum(props) {
     setPost("");
     setErrorMessage("");
   };
+  const hanldeReUpload = async (event) => {
+    const formData = new FormData();
+    formData.append("file", event.target.files[0]);
+    formData.append("upload_preset", "mjejl4ae");
+
+    const result = await fetch(
+      "https://api.cloudinary.com/v1_1/devf3tnbv/image/upload",
+      {
+        mode: "cors",
+        method: "post",
+        body: formData,
+      }
+    ).then((res) => res.json());
+
+    setNewImageUrl(result.secure_url);
+  };
+
+  const handleSubmitChange = () => {
+    console.log("postIndex ne");
+    console.log(postIndex);
+    const postTrimmed = editPost.trim();
+
+    if (postTrimmed === "") {
+      setErrorMessage("A post cannot be empty.");
+      return;
+    }
+    if (postTrimmed.length > 256) {
+      setErrorMessage("A post must contain less than 256 Charaters.");
+      return;
+    }
+
+    if (postTrimmed !== undefined) {
+      userPost[postIndex].text = postTrimmed;
+    }
+    if (newimageurl !== "") {
+      userPost[postIndex].imageurl = newimageurl;
+    }
+
+    localStorage.setItem(POST_KEY, JSON.stringify(userPost));
+
+    setNewImageUrl("");
+    setEditPost("");
+    setErrorMessage("");
+  };
   const handleComment = (postId) => {
     let user = JSON.parse(localStorage.getItem("user"));
     if (
@@ -154,6 +207,7 @@ function Forum(props) {
     }
   };
   const handleDeletePost = (index) => {
+    console.log(index);
     posts.splice(index.index, 1);
     console.log(posts);
     localStorage.setItem(POST_KEY, JSON.stringify(posts));
@@ -162,7 +216,7 @@ function Forum(props) {
   };
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form>
         <fieldset>
           <legend>Post now~</legend>
           <div className="form-group rounded">
@@ -199,6 +253,7 @@ function Forum(props) {
               type="submit"
               className="btn btn-outline-success"
               value="Publish"
+              onClick={handleSubmit}
             />
           </div>
         </fieldset>
@@ -227,9 +282,71 @@ function Forum(props) {
                         handleDeletePost({ index: index });
                       }}
                     >
-                      Delete Post
+                      Delete
                     </button>
                   ) : null}
+                  {x.username === getUserData.username ? (
+                    <button
+                      className="btn btn-success float-right mr-2"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        console.log(index);
+                        setPostIndex(index);
+
+                        //handleDeletePost({ index: index });
+                        setEdShow(true);
+                      }}
+                    >
+                      Edit
+                    </button>
+                  ) : null}
+                  <Modal show={editShow} onHide={() => setEdShow(false)}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Edit Post</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <div className="form-group input-group">
+                        <span className=" " style={{ width: "80px" }}>
+                          <i className="">Text</i>
+                        </span>
+
+                        <textarea
+                          name="editPost"
+                          id="editPost"
+                          className="form-control"
+                          rows="3"
+                          value={editPost}
+                          onChange={handleEditChange}
+                        />
+                      </div>
+                      <div className="form-group  ">
+                        <input
+                          className="btn-outline-success  mx-auto rounded-lg"
+                          type="file"
+                          onChange={hanldeReUpload}
+                        />
+                      </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button
+                        variant="secondary"
+                        onClick={() => setEdShow(false)}
+                      >
+                        Close
+                      </Button>
+                      <input
+                        type="submit"
+                        className="btn btn-success mr-5"
+                        value="Confirm"
+                        onClick={(e) => {
+                          e.preventDefault();
+
+                          handleSubmitChange();
+                          setEdShow(false);
+                        }}
+                      />
+                    </Modal.Footer>
+                  </Modal>
                 </h3>
 
                 {x.imageurl !== undefined ? (
