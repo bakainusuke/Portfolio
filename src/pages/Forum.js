@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
+import { Image } from "react-bootstrap";
 
 const POST_KEY = "posts";
 
@@ -153,8 +154,8 @@ function Forum(props) {
     }
   };
   const handleDeletePost = (index) => {
-    posts.splice(index.index,1);
-    console.log(posts)
+    posts.splice(index.index, 1);
+    console.log(posts);
     localStorage.setItem(POST_KEY, JSON.stringify(posts));
 
     setUpdate(update === false ? true : false);
@@ -182,14 +183,18 @@ function Forum(props) {
           <div className="form-group">
             <input
               type="button"
-              className="btn btn-danger mr-5"
+              className="btn btn-danger mr-3"
               value="Cancel"
               onClick={() => {
                 setPost("");
                 setErrorMessage(null);
               }}
             />
-            <input type="file" onChange={hanldeUpload} />
+            <input
+              type="file"
+              className="btn-dark btn-outline-success   mr-3 rounded-lg  "
+              onChange={hanldeUpload}
+            />
             <input
               type="submit"
               className="btn btn-outline-success"
@@ -212,21 +217,31 @@ function Forum(props) {
                 className="border my-3 p-3 rounded bg-white col-auto"
                 style={{ whiteSpace: "pre-wrap" }}
               >
-                {x.username === getUserData.username ? (
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleDeletePost({ index: index });
-                    }}
-                  >
-                    Delete Post
-                  </button>
-                ) : null}
-                <h3 className="text-primary col-auto m-3 ">{x.username}</h3>
-                <p className="text-md-left m-5">{x.text}</p>
+                <h3 className="text-primary col-auto m-3 ">
+                  {x.username}{" "}
+                  {x.username === getUserData.username ? (
+                    <button
+                      className="btn btn-danger float-right"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleDeletePost({ index: index });
+                      }}
+                    >
+                      Delete Post
+                    </button>
+                  ) : null}
+                </h3>
+
                 {x.imageurl !== undefined ? (
-                  <img src={x.imageurl} alt="" />
+                  <img
+                    className=" mx-auto"
+                    style={{ display: "block", width: 700 }}
+                    src={x.imageurl}
+                    alt=""
+                  />
                 ) : null}
+                <p className="text-md-left m-5">{x.text} </p>
+
                 <hr />
                 <p className="text-warning mt-3 m-4">Reply</p>
 
