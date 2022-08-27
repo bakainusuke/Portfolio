@@ -79,15 +79,15 @@ const Signup = (props) => {
       <div className="row" style={{ width: "1000px" }}>
         <div className="col-md-6">
           <form onSubmit={handleSubmit}>
-            <div class="form-group input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" style={{ width: "100px" }}>
-                  <i class="">User Name</i>
+            <div className="form-group input-group">
+              <div className="input-group-prepend">
+                <span className="input-group-text" style={{ width: "100px" }}>
+                  <i className="">User Name</i>
                 </span>
               </div>
               <input
                 id="username"
-                class="form-control "
+                className="form-control "
                 name="username"
                 type="username"
                 placeholder="User name"
@@ -99,15 +99,15 @@ const Signup = (props) => {
               ) : null}
             </div>
 
-            <div class="form-group input-group">
-              <div class="input-group-prepend ">
-                <span class="input-group-text  " style={{ width: "100px" }}>
-                  <i class="">Email</i>
+            <div className="form-group input-group">
+              <div className="input-group-prepend ">
+                <span className="input-group-text  " style={{ width: "100px" }}>
+                  <i className="">Email</i>
                 </span>
               </div>
               <input
                 id="email"
-                class="form-control"
+                className="form-control"
                 name="email"
                 type="email"
                 placeholder="Email address"
@@ -119,15 +119,15 @@ const Signup = (props) => {
               ) : null}
             </div>
 
-            <div class="form-group input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" style={{ width: "100px" }}>
-                  <i class="">Password</i>
+            <div className="form-group input-group">
+              <div className="input-group-prepend">
+                <span className="input-group-text" style={{ width: "100px" }}>
+                  <i className="">Password</i>
                 </span>
               </div>
               <input
                 id="password"
-                class="form-control"
+                className="form-control"
                 name="password"
                 type="password"
                 placeholder="Create password"
@@ -139,15 +139,15 @@ const Signup = (props) => {
               ) : null}
             </div>
 
-            <div class="form-group input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" style={{ width: "100px" }}>
-                  <i class="">Password</i>
+            <div className="form-group input-group">
+              <div className="input-group-prepend">
+                <span className="input-group-text" style={{ width: "100px" }}>
+                  <i className="">Password</i>
                 </span>
               </div>
               <input
                 id="confirmPassword"
-                class="form-control"
+                className="form-control"
                 name="confirmPassword"
                 type="password"
                 placeholder="Repeat password"
@@ -159,7 +159,7 @@ const Signup = (props) => {
               ) : null}
             </div>
 
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" className="btn btn-primary">
               Create
             </button>
           </form>

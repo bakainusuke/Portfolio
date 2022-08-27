@@ -91,21 +91,17 @@ function Forum(props) {
     }
   };
   const handleReply = (commentIndex) => {
-    console.log(commentIndex)
-    let indexofPost  = posts.findIndex(
+    console.log(commentIndex);
+    let indexofPost = posts.findIndex(
       (element) => element.postId === commentIndex.commentId.postId
-    )
-    console.log(indexofPost)
+    );
+    console.log(indexofPost);
     let user = JSON.parse(localStorage.getItem("user"));
     if (
-      posts[indexofPost].comment[commentIndex.commentIndex]
-        .reply === null ||
-      posts[indexofPost].comment[commentIndex.commentIndex]
-        .reply === undefined
+      posts[indexofPost].comment[commentIndex.commentIndex].reply === null ||
+      posts[indexofPost].comment[commentIndex.commentIndex].reply === undefined
     ) {
-      posts[indexofPost].comment[
-        commentIndex.commentIndex
-      ].reply = [
+      posts[indexofPost].comment[commentIndex.commentIndex].reply = [
         {
           commentId: uuid(),
           replyValue: replyValue,
@@ -116,9 +112,7 @@ function Forum(props) {
       localStorage.setItem(POST_KEY, JSON.stringify(posts));
       setUpdate(update === false ? true : false);
     } else {
-      posts[indexofPost].comment[
-        commentIndex.commentIndex
-      ].reply.push({
+      posts[indexofPost].comment[commentIndex.commentIndex].reply.push({
         commentId: uuid(),
         replyValue: replyValue,
         userCreated: user.username,
@@ -180,58 +174,56 @@ function Forum(props) {
                 style={{ whiteSpace: "pre-wrap" }}
               >
                 <h3 className="text-primary col-auto">{x.username}</h3>
-                <p class="text-md-left">{x.text}</p>
+                <p className="text-md-left">{x.text}</p>
                 <p className="mt-3">Reply</p>
 
-                {
-                  x?.comment?.map((data, index) => (
-                    <>
-                      <p class="text-md-left">{data.userCreated}</p>
+                {x?.comment?.map((data, index) => (
+                  <>
+                    <p className="text-md-left">{data.userCreated}</p>
 
-                      <p class="text-md-left">{data.commentValue}</p>
-                      <textarea
-                        name="post"
-                        id="post"
-                        className=" form-control"
-                        rows="3"
-                        value={index === indexvalueofReply ? replyValue : ""}
-                        onChange={(e) => {
-                          if (
-                            index !== indexvalueofReply &&
-                            indexvalueofReply !== null
-                          ) {
-                            setIndexvalueofReply(index);
-                            setreplyvalue("");
-                          } else if (indexvalueofReply === null) {
-                            setIndexvalueofReply(index);
-                            setreplyvalue(e.target.value);
-                          } else if (index === indexvalueofReply) {
-                            setreplyvalue(e.target.value);
-                          }
-                        }}
-                      />
-                      {data?.reply?.map((dataReply, index) =>
-                      (<>
-                      
-                      <p class="text-md-left ml-10">{dataReply.replyValue}</p>
+                    <p className="text-md-left">{data.commentValue}</p>
+                    <textarea
+                      name="post"
+                      id="post"
+                      className=" form-control"
+                      rows="3"
+                      value={index === indexvalueofReply ? replyValue : ""}
+                      onChange={(e) => {
+                        if (
+                          index !== indexvalueofReply &&
+                          indexvalueofReply !== null
+                        ) {
+                          setIndexvalueofReply(index);
+                          setreplyvalue("");
+                        } else if (indexvalueofReply === null) {
+                          setIndexvalueofReply(index);
+                          setreplyvalue(e.target.value);
+                        } else if (index === indexvalueofReply) {
+                          setreplyvalue(e.target.value);
+                        }
+                      }}
+                    />
+                    {data?.reply?.map((dataReply, index) => (
+                      <>
+                        <p className="text-md-left ml-10">
+                          {dataReply.replyValue}
+                        </p>
                       </>
-
-                      ))}
-                      <input
-                        type="submit"
-                        className="mt-3 btn btn-outline-success"
-                        value="Reply"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleReply({
-                            commentIndex: indexvalueofReply,
-                            commentId: x
-                          });
-                        }}
-                      />
-                     
-                    </>
-                  ))}
+                    ))}
+                    <input
+                      type="submit"
+                      className="mt-3 btn btn-outline-success"
+                      value="Reply"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleReply({
+                          commentIndex: indexvalueofReply,
+                          commentId: x,
+                        });
+                      }}
+                    />
+                  </>
+                ))}
 
                 <textarea
                   name="post"

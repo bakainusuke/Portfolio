@@ -86,7 +86,7 @@ function Login(props) {
     <div>
       <h1>Login</h1>
       <hr />
-      <div className="row" style={{ width: "1000px" }}>
+      <div className="row" style={{ width: "600px" }}>
         <div className="col-md-6">
           <form onSubmit={handleSubmit}>
             <div className="form-group">

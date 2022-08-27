@@ -12,7 +12,7 @@ function MyProfile(props) {
     var userDate = "Unknown";
   } else {
     const result = fromUnixTime(user.dateCreated);
-    var userDate = `${result.getDate()}/${
+    userDate = `${result.getDate()}/${
       result.getMonth() + 1
     }/${result.getFullYear()}`;
   }
@@ -25,23 +25,26 @@ function MyProfile(props) {
   };
 
   return (
-    <div class="row">
-      <div class=" col-xl-6 col-lg-7 col-md-12 " style={{ height: "300px" }}>
-        <div class="card " style={{ height: "300px" }}>
-          <div class="col-lg-8 col-md-8 col-12">
+    <div className="row">
+      <div
+        className=" col-xl-6 col-lg-7 col-md-12 "
+        style={{ height: "300px" }}
+      >
+        <div className="card " style={{ height: "300px" }}>
+          <div className="col-lg-8 col-md-8 col-12">
             <h1 className="form-group display-5 m-3">
               <strong>Details</strong>
             </h1>
-            <div class=" form-group m-4">
-              <h4 class="">
+            <div className=" form-group m-4">
+              <h4 className="">
                 User:
                 <strong> {user.username}</strong>
               </h4>
-              <span class="">Email: {user.email}</span>
+              <span className="">Email: {user.email}</span>
               <p>Join Date: {userDate}</p>
             </div>
 
-            <div class="form-group">
+            <div className="form-group">
               <input
                 type="submit"
                 className="btn btn-primary btn-round m-3"
