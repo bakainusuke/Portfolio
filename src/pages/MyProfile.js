@@ -5,17 +5,19 @@ import { getUser, removeUser, deleteUser } from "../data/repository";
 import { Button, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 const USER_KEY = "user";
+const POST_KEY = "posts";
 
 function MyProfile(props) {
   const [deleteShow, setDeShow] = useState(false);
   const [editShow, setEdShow] = useState(false);
   const [userDetail, setUserDetail] = useState();
+  const [userPost, setgetUserPost] = useState();
   const [getAllUser, setgetAllUser] = useState();
   let navigate = useNavigate();
-
-  console.log(userDetail);
   useEffect(() => {
     const userData = () => {
+      setgetUserPost(JSON.parse(localStorage.getItem(POST_KEY)));
+
       setgetAllUser(JSON.parse(localStorage.getItem("users")));
       setUserDetail(JSON.parse(localStorage.getItem(USER_KEY)));
     };
@@ -51,9 +53,39 @@ function MyProfile(props) {
     }
 
     localStorage.setItem("users", JSON.stringify(getAllUser));
-    navigate('/login')
-    props.logoutUser()
+    navigate("/login");
+    props.logoutUser();
   };
+  const handleDeleteUser = (props) => {
+    const indexOfUser = getAllUser.findIndex(
+      (element) => element.userId === userDetail.userId
+    );
+    let arrayvalue = [];
+    if(userPost !== undefined && userPost !== null)
+    {
+
+    for (let i = 0; i < userPost.length; i++) {
+      if (userPost[i].username === userDetail.username) {
+        arrayvalue.push(i);
+      }
+    }
+    if (parseInt(arrayvalue.length) === parseInt(userPost.length)) {
+      localStorage.clear(POST_KEY);
+    }else{
+
+      for (let i = 0; i < arrayvalue.length; i++) {
+        userPost.splice(arrayvalue[i], 1);
+      }
+      
+      localStorage.setItem(POST_KEY, JSON.stringify(userPost));
+    }
+  }
+  getAllUser.splice(indexOfUser, 1);
+    props.logoutUser();
+    localStorage.setItem("users", JSON.stringify(getAllUser));
+    navigate("/login");
+  };
+  console.log(userDetail)
   return (
     <div className="row">
       <div
@@ -152,7 +184,7 @@ function MyProfile(props) {
                       value="Delete"
                       onClick={(e) => {
                         e.preventDefault();
-                        handleDelete(user.userId);
+                        handleDeleteUser(props);
                       }}
                     />
                   </Modal.Footer>
