@@ -167,21 +167,46 @@ function Forum(props) {
         {posts === null ? (
           <span className="text-muted">No posts have been submitted.</span>
         ) : (
+          (console.log(posts),
           posts.map((x, index) => (
             <>
               <div
                 className="border my-3 p-3 rounded bg-white col-auto"
                 style={{ whiteSpace: "pre-wrap" }}
               >
-                <h3 className="text-primary col-auto">{x.username}</h3>
-                <p className="text-md-left">{x.text}</p>
-                <p className="mt-3">Reply</p>
+                <h3 className="text-primary col-auto m-3 ">{x.username}</h3>
+                <p className="text-md-left m-5">{x.text}</p>
+                <hr />
+                <p className="text-warning mt-3 m-4">Reply</p>
 
                 {x?.comment?.map((data, index) => (
                   <>
-                    <p className="text-md-left">{data.userCreated}</p>
+                    <div className="row">
+                      <div className="col-sm-3 col-md-1">
+                        <h4 className="text-md-left text-info col-lg-1 col-md-8 col-3">
+                          {data.userCreated}
+                        </h4>
+                      </div>
+                      <div className="col-sm-3 col-md-6">
+                        <p className=" text-md ">{data.commentValue}</p>
+                      </div>
+                    </div>
 
-                    <p className="text-md-left">{data.commentValue}</p>
+                    {data?.reply?.map((dataReply, index) => (
+                      <>
+                        <div className="row">
+                          <div className="col- m-2"></div>
+                          <div className="col-sm-3 col-md-1 m-1">
+                            <h5 className="text-md-right text-secondary col-lg-1 col-md-8 col-3">
+                              {dataReply.userCreated}
+                            </h5>
+                          </div>
+                          <div className="col-sm-3 col-md-6 my-1">
+                            <p className=" text-md ">{dataReply.replyValue}</p>
+                          </div>
+                        </div>
+                      </>
+                    ))}
                     <textarea
                       name="post"
                       id="post"
@@ -203,13 +228,6 @@ function Forum(props) {
                         }
                       }}
                     />
-                    {data?.reply?.map((dataReply, index) => (
-                      <>
-                        <p className="text-md-left ml-10">
-                          {dataReply.replyValue}
-                        </p>
-                      </>
-                    ))}
                     <input
                       type="submit"
                       className="mt-3 btn btn-outline-success"
@@ -254,7 +272,7 @@ function Forum(props) {
                 />
               </div>
             </>
-          ))
+          )))
         )}
       </div>
     </div>
