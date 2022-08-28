@@ -19,6 +19,7 @@ function Forum(props) {
   const [editShow, setEdShow] = useState(false);
   const [userPost, setgetUserPost] = useState();
   const [editPost, setEditPost] = useState("");
+  const [uploadImage, setUploadImage] = useState(false);
   const [postIndex, setPostIndex] = useState();
   useEffect(() => {
     setPosts(JSON.parse(localStorage.getItem(POST_KEY)));
@@ -37,7 +38,7 @@ function Forum(props) {
     const formData = new FormData();
     formData.append("file", event.target.files[0]);
     formData.append("upload_preset", "mjejl4ae");
-
+    setUploadImage(true);
     const result = await fetch(
       "https://api.cloudinary.com/v1_1/devf3tnbv/image/upload",
       {
@@ -47,6 +48,8 @@ function Forum(props) {
       }
     ).then((res) => res.json());
     console.log(result);
+    setUploadImage(false);
+
     setImageUrl(result.secure_url);
   };
   const handleSubmit = (event) => {
@@ -250,6 +253,7 @@ function Forum(props) {
               type="submit"
               className="btn btn-outline-success"
               value="Publish"
+              disabled={uploadImage}
               onClick={handleSubmit}
             />
           </div>
