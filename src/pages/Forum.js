@@ -312,6 +312,11 @@ function Forum(props) {
                           onChange={handleEditChange}
                         />
                       </div>
+                      {errorMessage !== null && (
+                        <div className="form-group">
+                          <span className="text-danger">{errorMessage}</span>
+                        </div>
+                      )}
                       <div className="form-group  ">
                         <input
                           className="btn-outline-success  mx-auto rounded-lg"
@@ -323,7 +328,11 @@ function Forum(props) {
                     <Modal.Footer>
                       <Button
                         variant="secondary"
-                        onClick={() => setEdShow(false)}
+                        onClick={() => {
+                          setEdShow(false);
+                          setEditPost("");
+                          setErrorMessage(null);
+                        }}
                       >
                         Close
                       </Button>
