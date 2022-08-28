@@ -103,6 +103,7 @@ function Forum(props) {
     // Reset post content.
     setPost("");
     setErrorMessage("");
+    setUpdate(update === false ? true : false);
   };
   const hanldeReUpload = async (event) => {
     const formData = new FormData();
@@ -126,22 +127,23 @@ function Forum(props) {
 
   const handleSubmitChange = () => {
     console.log(postIndex);
+    const prepost = userPost[postIndex].text;
     const postTrimmed = editPost.trim();
 
-    if (postTrimmed === "") {
-      setErrorMessage("A post cannot be empty.");
-      return;
-    }
     if (postTrimmed.length > 256) {
       setErrorMessage("A post must contain less than 256 Charaters.");
       return;
     }
 
-    if (postTrimmed !== undefined) {
-      userPost[postIndex].text = postTrimmed;
-    }
     if (newimageurl !== "") {
       userPost[postIndex].imageurl = newimageurl;
+      console.log(userPost[postIndex].imageurl);
+    }
+
+    if (postTrimmed === "") {
+      userPost[postIndex].text = prepost;
+    } else if (postTrimmed !== undefined) {
+      userPost[postIndex].text = postTrimmed;
     }
 
     localStorage.setItem(POST_KEY, JSON.stringify(userPost));
