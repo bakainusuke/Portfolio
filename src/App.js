@@ -16,7 +16,6 @@ import { getUser, removeUser } from "./data/repository";
 
 function App() {
   const [username, setUsername] = useState(getUser());
-  //console.log(username)
   const loginUser = (username) => {
     setUsername(username);
   };
@@ -64,7 +63,9 @@ function App() {
               />
               <Route
                 path="/profile"
-                element={<MyProfile username={username}  logoutUser={logoutUser}/>}
+                element={
+                  <MyProfile username={username} logoutUser={logoutUser} />
+                }
               />
               <Route path="/forum" element={<Forum username={username} />} />
             </Routes>

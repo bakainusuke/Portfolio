@@ -29,7 +29,6 @@ function Login(props) {
   const [fields, setFields] = useState({ username: "", password: "" });
   const [errorMessage, setErrorMessage] = useState(null);
   const navigate = useNavigate();
-  const getUserLogin = localStorage.getItem("users");
   // Generic change handler.
   const handleInputChange = (event) => {
     const name = event.target.name;
@@ -76,8 +75,6 @@ function Login(props) {
     const temp = { ...fields };
     temp.password = "";
     setFields(temp);
-
-    // Set error message.
   };
   const responseGoogle = (response) => {
     console.log(response);

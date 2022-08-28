@@ -4,8 +4,6 @@ import { Button, Modal } from "react-bootstrap";
 
 const POST_KEY = "posts";
 
-// NOTE: The posts are not persistent and will be lost when the component unmounts.
-// Could store the posts in localStorage, within the parent component, in a context, etc...
 function Forum(props) {
   const [post, setPost] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
@@ -288,10 +286,7 @@ function Forum(props) {
                       className="btn btn-success float-right mr-2"
                       onClick={(e) => {
                         e.preventDefault();
-
                         setPostIndex(index);
-
-                        //handleDeletePost({ index: index });
                         setEdShow(true);
                       }}
                     >
