@@ -13,8 +13,11 @@ function Home(props) {
       <h4>
         <strong>Hello {user.username}!</strong>
       </h4>
-
-      <img src={logo} className="w-50" alt="logo" />
+      <p>Wellcome new user</p>
+      <p>Loop Agile Now or LAN is new social media for workload.</p>
+      <p>
+        Feel free to make post in <strong>Forum</strong> page
+      </p>
     </div>
   );
 }
