@@ -121,7 +121,6 @@ function Forum(props) {
   };
 
   const handleSubmitChange = () => {
-    console.log("postIndex ne");
     console.log(postIndex);
     const postTrimmed = editPost.trim();
 
@@ -208,7 +207,6 @@ function Forum(props) {
     }
   };
   const handleDeletePost = (index) => {
-    console.log(index);
     posts.splice(index.index, 1);
     console.log(posts);
     localStorage.setItem(POST_KEY, JSON.stringify(posts));
@@ -266,7 +264,6 @@ function Forum(props) {
         {posts === null ? (
           <span className="text-muted">No posts have been submitted.</span>
         ) : (
-          (console.log(posts),
           posts.map((x, index) => (
             <>
               <div
@@ -456,7 +453,7 @@ function Forum(props) {
                 />
               </div>
             </>
-          )))
+          ))
         )}
       </div>
     </div>
