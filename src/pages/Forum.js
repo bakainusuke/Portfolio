@@ -108,6 +108,7 @@ function Forum(props) {
     const formData = new FormData();
     formData.append("file", event.target.files[0]);
     formData.append("upload_preset", "mjejl4ae");
+    setUploadImage(true);
 
     const result = await fetch(
       "https://api.cloudinary.com/v1_1/devf3tnbv/image/upload",
@@ -117,6 +118,8 @@ function Forum(props) {
         body: formData,
       }
     ).then((res) => res.json());
+    console.log(result);
+    setUploadImage(false);
 
     setNewImageUrl(result.secure_url);
   };
@@ -344,9 +347,9 @@ function Forum(props) {
                         type="submit"
                         className="btn btn-success mr-5"
                         value="Confirm"
+                        disabled={uploadImage}
                         onClick={(e) => {
                           e.preventDefault();
-
                           handleSubmitChange();
                           setEdShow(false);
                         }}
