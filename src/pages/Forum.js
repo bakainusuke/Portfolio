@@ -21,6 +21,25 @@ function Forum(props) {
   const [editPost, setEditPost] = useState("");
   const [uploadImage, setUploadImage] = useState(false);
   const [postIndex, setPostIndex] = useState();
+  const [isHoverR, setIsHoverR] = useState(false);
+  const [isHoverC, setIsHoverC] = useState(false);
+
+  const handleMouseOverReply = () => {
+    setIsHoverR(true);
+  };
+
+  const handleMouseOutReply = () => {
+    setIsHoverR(false);
+  };
+
+  const handleMouseOverCommnet = () => {
+    setIsHoverC(true);
+  };
+
+  const handleMouseOutCommnet = () => {
+    setIsHoverC(false);
+  };
+
   useEffect(() => {
     setPosts(JSON.parse(localStorage.getItem(POST_KEY)));
     setGetUserData(JSON.parse(localStorage.getItem("user")));
@@ -220,7 +239,12 @@ function Forum(props) {
     setUpdate(update === false ? true : false);
   };
   return (
-    <div>
+    <div
+      onMouseEnter={(e) => {
+        handleMouseOutReply();
+        handleMouseOutCommnet();
+      }}
+    >
       <form>
         <fieldset>
           <legend>Post now~</legend>
@@ -401,69 +425,78 @@ function Forum(props) {
                         </div>
                       </>
                     ))}
+                    <div>
+                      {isHoverR && (
+                        <textarea
+                          name="post"
+                          id="post"
+                          className=" form-control"
+                          rows="3"
+                          value={index === indexvalueofReply ? replyValue : ""}
+                          onChange={(e) => {
+                            if (
+                              index !== indexvalueofReply &&
+                              indexvalueofReply !== null
+                            ) {
+                              setIndexvalueofReply(index);
+                              setreplyvalue("");
+                            } else if (indexvalueofReply === null) {
+                              setIndexvalueofReply(index);
+                              setreplyvalue(e.target.value);
+                            } else if (index === indexvalueofReply) {
+                              setreplyvalue(e.target.value);
+                            }
+                          }}
+                        />
+                      )}
+                      <input
+                        type="submit"
+                        className="mt-3 btn btn-outline-success"
+                        value="Reply"
+                        onMouseEnter={handleMouseOverReply}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleReply({
+                            commentIndex: indexvalueofReply,
+                            commentId: x,
+                          });
+                        }}
+                      />
+                    </div>
+                  </>
+                ))}
+                <div>
+                  {isHoverC && (
                     <textarea
                       name="post"
                       id="post"
                       className=" form-control"
                       rows="3"
-                      value={index === indexvalueofReply ? replyValue : ""}
+                      value={index === indexvalue ? comment : ""}
                       onChange={(e) => {
-                        if (
-                          index !== indexvalueofReply &&
-                          indexvalueofReply !== null
-                        ) {
-                          setIndexvalueofReply(index);
-                          setreplyvalue("");
-                        } else if (indexvalueofReply === null) {
-                          setIndexvalueofReply(index);
-                          setreplyvalue(e.target.value);
-                        } else if (index === indexvalueofReply) {
-                          setreplyvalue(e.target.value);
+                        if (index !== indexvalue && indexvalue !== null) {
+                          setIndexvalue(index);
+                          setComment("");
+                        } else if (indexvalue === null) {
+                          setIndexvalue(index);
+                          setComment(e.target.value);
+                        } else if (index === indexvalue) {
+                          setComment(e.target.value);
                         }
                       }}
                     />
-                    <input
-                      type="submit"
-                      className="mt-3 btn btn-outline-success"
-                      value="Reply"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleReply({
-                          commentIndex: indexvalueofReply,
-                          commentId: x,
-                        });
-                      }}
-                    />
-                  </>
-                ))}
-
-                <textarea
-                  name="post"
-                  id="post"
-                  className=" form-control"
-                  rows="3"
-                  value={index === indexvalue ? comment : ""}
-                  onChange={(e) => {
-                    if (index !== indexvalue && indexvalue !== null) {
-                      setIndexvalue(index);
-                      setComment("");
-                    } else if (indexvalue === null) {
-                      setIndexvalue(index);
-                      setComment(e.target.value);
-                    } else if (index === indexvalue) {
-                      setComment(e.target.value);
-                    }
-                  }}
-                />
-                <input
-                  type="submit"
-                  className="mt-3 btn btn-outline-success"
-                  value="Comment"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleComment({ postId: index });
-                  }}
-                />
+                  )}
+                  <input
+                    type="submit"
+                    className="mt-3 btn btn-outline-success"
+                    value="Comment"
+                    onMouseEnter={handleMouseOverCommnet}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleComment({ postId: index });
+                    }}
+                  />
+                </div>
               </div>
             </>
           ))
