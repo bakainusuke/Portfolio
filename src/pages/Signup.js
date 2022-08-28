@@ -10,7 +10,7 @@ const USER_KEY = "users";
 
 const Signup = (props) => {
   const notifySuccess = () => {
-    toast.success("Success Notification !", {
+    toast.success("Success Signup!", {
       position: "top-left",
       autoClose: 5000,
       hideProgressBar: false,

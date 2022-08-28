@@ -16,7 +16,7 @@ function Login(props) {
     });
   };
   const notifySuccess = () => {
-    toast.success("Success Notification !", {
+    toast.success("Wellcome back!", {
       position: "top-left",
       autoClose: 5000,
       hideProgressBar: false,
