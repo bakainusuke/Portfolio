@@ -295,211 +295,217 @@ function Forum(props) {
         {posts === null ? (
           <span className="text-muted">No posts have been submitted.</span>
         ) : (
-          posts.map((x, index) => (
-            <>
-              <div
-                className="border my-3 p-3 rounded bg-white col-auto"
-                style={{ whiteSpace: "pre-wrap" }}
-              >
-                <h3 className="text-primary col-auto m-3 ">
-                  {x.username}{" "}
-                  {x.username === getUserData.username ? (
-                    <button
-                      className="btn btn-danger float-right"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handleDeletePost({ index: index });
-                      }}
-                    >
-                      Delete
-                    </button>
-                  ) : null}
-                  {x.username === getUserData.username ? (
-                    <button
-                      className="btn btn-success float-right mr-2"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setPostIndex(index);
-                        setEdShow(true);
-                      }}
-                    >
-                      Edit
-                    </button>
-                  ) : null}
-                  <Modal show={editShow} onHide={() => setEdShow(false)}>
-                    <Modal.Header closeButton>
-                      <Modal.Title>Edit Post</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <div className="form-group input-group">
-                        <span className=" " style={{ width: "80px" }}>
-                          <i className="">Text</i>
-                        </span>
-
-                        <textarea
-                          name="editPost"
-                          id="editPost"
-                          className="form-control"
-                          rows="3"
-                          value={editPost}
-                          onChange={handleEditChange}
-                        />
-                      </div>
-                      {errorMessage !== null && (
-                        <div className="form-group">
-                          <span className="text-danger">{errorMessage}</span>
-                        </div>
-                      )}
-                      <div className="form-group  ">
-                        <input
-                          className="btn-outline-success  mx-auto rounded-lg"
-                          type="file"
-                          onChange={hanldeReUpload}
-                        />
-                      </div>
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Button
-                        variant="secondary"
-                        onClick={() => {
-                          setEdShow(false);
-                          setEditPost("");
-                          setErrorMessage(null);
+          posts
+            .map((x, index) => (
+              <>
+                <div
+                  className="border my-3 p-3 rounded bg-white col-auto"
+                  style={{ whiteSpace: "pre-wrap" }}
+                >
+                  <h3 className="text-primary col-auto m-3 ">
+                    {x.username}{" "}
+                    {x.username === getUserData.username ? (
+                      <button
+                        className="btn btn-danger float-right"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleDeletePost({ index: index });
                         }}
                       >
-                        Close
-                      </Button>
-                      <input
-                        type="submit"
-                        className="btn btn-success mr-5"
-                        value="Confirm"
-                        disabled={uploadImage}
+                        Delete
+                      </button>
+                    ) : null}
+                    {x.username === getUserData.username ? (
+                      <button
+                        className="btn btn-success float-right mr-2"
                         onClick={(e) => {
                           e.preventDefault();
-                          handleSubmitChange();
-                          setEdShow(false);
+                          setPostIndex(index);
+                          setEdShow(true);
                         }}
-                      />
-                    </Modal.Footer>
-                  </Modal>
-                </h3>
+                      >
+                        Edit
+                      </button>
+                    ) : null}
+                    <Modal show={editShow} onHide={() => setEdShow(false)}>
+                      <Modal.Header closeButton>
+                        <Modal.Title>Edit Post</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <div className="form-group input-group">
+                          <span className=" " style={{ width: "80px" }}>
+                            <i className="">Text</i>
+                          </span>
 
-                {x.imageurl !== undefined ? (
-                  <img
-                    className=" mx-auto"
-                    style={{ display: "block", width: 700 }}
-                    src={x.imageurl}
-                    alt=""
-                  />
-                ) : null}
-                <p className="text-md-left m-5">{x.text} </p>
-
-                <hr />
-                <p className="text-warning mt-3 m-4">Reply</p>
-
-                {x?.comment?.map((data, index) => (
-                  <>
-                    <div className="row">
-                      <div className="col-sm-3 col-md-1">
-                        <h4 className="text-md-left text-info col-lg-1 col-md-8 col-3">
-                          {data.userCreated}
-                        </h4>
-                      </div>
-                      <div className="col-sm-3 col-md-6">
-                        <p className=" text-md ">{data.commentValue}</p>
-                      </div>
-                    </div>
-
-                    {data?.reply?.map((dataReply, index) => (
-                      <>
-                        <div className="row">
-                          <div className="col- m-2"></div>
-                          <div className="col-sm-3 col-md-1 m-1">
-                            <h5 className="text-md-right text-secondary col-lg-1 col-md-8 col-3">
-                              {dataReply.userCreated}
-                            </h5>
-                          </div>
-                          <div className="col-sm-3 col-md-6 my-1">
-                            <p className=" text-md ">{dataReply.replyValue}</p>
-                          </div>
+                          <textarea
+                            name="editPost"
+                            id="editPost"
+                            className="form-control"
+                            rows="3"
+                            value={editPost}
+                            onChange={handleEditChange}
+                          />
                         </div>
-                      </>
-                    ))}
-                    <div>
-                      {isHoverR && (
-                        <textarea
-                          name="post"
-                          id="post"
-                          className=" form-control"
-                          rows="3"
-                          value={index === indexvalueofReply ? replyValue : ""}
-                          onChange={(e) => {
-                            if (
-                              index !== indexvalueofReply &&
-                              indexvalueofReply !== null
-                            ) {
-                              setIndexvalueofReply(index);
-                              setreplyvalue("");
-                            } else if (indexvalueofReply === null) {
-                              setIndexvalueofReply(index);
-                              setreplyvalue(e.target.value);
-                            } else if (index === indexvalueofReply) {
-                              setreplyvalue(e.target.value);
-                            }
+                        {errorMessage !== null && (
+                          <div className="form-group">
+                            <span className="text-danger">{errorMessage}</span>
+                          </div>
+                        )}
+                        <div className="form-group  ">
+                          <input
+                            className="btn-outline-success  mx-auto rounded-lg"
+                            type="file"
+                            onChange={hanldeReUpload}
+                          />
+                        </div>
+                      </Modal.Body>
+                      <Modal.Footer>
+                        <Button
+                          variant="secondary"
+                          onClick={() => {
+                            setEdShow(false);
+                            setEditPost("");
+                            setErrorMessage(null);
+                          }}
+                        >
+                          Close
+                        </Button>
+                        <input
+                          type="submit"
+                          className="btn btn-success mr-5"
+                          value="Confirm"
+                          disabled={uploadImage}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleSubmitChange();
+                            setEdShow(false);
                           }}
                         />
-                      )}
-                      <input
-                        type="submit"
-                        className="mt-3 btn btn-outline-success"
-                        value="Reply"
-                        onMouseEnter={handleMouseOverReply}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleReply({
-                            commentIndex: indexvalueofReply,
-                            commentId: x,
-                          });
+                      </Modal.Footer>
+                    </Modal>
+                  </h3>
+
+                  {x.imageurl !== undefined ? (
+                    <img
+                      className=" mx-auto"
+                      style={{ display: "block", width: 700 }}
+                      src={x.imageurl}
+                      alt=""
+                    />
+                  ) : null}
+                  <p className="text-md-left m-5">{x.text} </p>
+
+                  <hr />
+                  <p className="text-warning mt-3 m-4">Reply</p>
+
+                  {x?.comment?.map((data, index) => (
+                    <>
+                      <div className="row">
+                        <div className="col-sm-3 col-md-1">
+                          <h4 className="text-md-left text-info col-lg-1 col-md-8 col-3">
+                            {data.userCreated}
+                          </h4>
+                        </div>
+                        <div className="col-sm-3 col-md-6">
+                          <p className=" text-md ">{data.commentValue}</p>
+                        </div>
+                      </div>
+
+                      {data?.reply?.map((dataReply, index) => (
+                        <>
+                          <div className="row">
+                            <div className="col- m-2"></div>
+                            <div className="col-sm-3 col-md-1 m-1">
+                              <h5 className="text-md-right text-secondary col-lg-1 col-md-8 col-3">
+                                {dataReply.userCreated}
+                              </h5>
+                            </div>
+                            <div className="col-sm-3 col-md-6 my-1">
+                              <p className=" text-md ">
+                                {dataReply.replyValue}
+                              </p>
+                            </div>
+                          </div>
+                        </>
+                      ))}
+                      <div>
+                        {isHoverR && (
+                          <textarea
+                            name="post"
+                            id="post"
+                            className=" form-control"
+                            rows="3"
+                            value={
+                              index === indexvalueofReply ? replyValue : ""
+                            }
+                            onChange={(e) => {
+                              if (
+                                index !== indexvalueofReply &&
+                                indexvalueofReply !== null
+                              ) {
+                                setIndexvalueofReply(index);
+                                setreplyvalue("");
+                              } else if (indexvalueofReply === null) {
+                                setIndexvalueofReply(index);
+                                setreplyvalue(e.target.value);
+                              } else if (index === indexvalueofReply) {
+                                setreplyvalue(e.target.value);
+                              }
+                            }}
+                          />
+                        )}
+                        <input
+                          type="submit"
+                          className="mt-3 btn btn-outline-success"
+                          value="Reply"
+                          onMouseEnter={handleMouseOverReply}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            handleReply({
+                              commentIndex: indexvalueofReply,
+                              commentId: x,
+                            });
+                          }}
+                        />
+                      </div>
+                    </>
+                  ))}
+                  <div>
+                    {isHoverC && (
+                      <textarea
+                        name="post"
+                        id="post"
+                        className=" form-control"
+                        rows="3"
+                        value={index === indexvalue ? comment : ""}
+                        onChange={(e) => {
+                          if (index !== indexvalue && indexvalue !== null) {
+                            setIndexvalue(index);
+                            setComment("");
+                          } else if (indexvalue === null) {
+                            setIndexvalue(index);
+                            setComment(e.target.value);
+                          } else if (index === indexvalue) {
+                            setComment(e.target.value);
+                          }
                         }}
                       />
-                    </div>
-                  </>
-                ))}
-                <div>
-                  {isHoverC && (
-                    <textarea
-                      name="post"
-                      id="post"
-                      className=" form-control"
-                      rows="3"
-                      value={index === indexvalue ? comment : ""}
-                      onChange={(e) => {
-                        if (index !== indexvalue && indexvalue !== null) {
-                          setIndexvalue(index);
-                          setComment("");
-                        } else if (indexvalue === null) {
-                          setIndexvalue(index);
-                          setComment(e.target.value);
-                        } else if (index === indexvalue) {
-                          setComment(e.target.value);
-                        }
+                    )}
+                    <input
+                      type="submit"
+                      className="mt-3 btn btn-outline-success"
+                      value="Comment"
+                      onMouseEnter={handleMouseOverCommnet}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleComment({ postId: index });
                       }}
                     />
-                  )}
-                  <input
-                    type="submit"
-                    className="mt-3 btn btn-outline-success"
-                    value="Comment"
-                    onMouseEnter={handleMouseOverCommnet}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleComment({ postId: index });
-                    }}
-                  />
+                  </div>
                 </div>
-              </div>
-            </>
-          ))
+              </>
+            ))
+            .reverse()
         )}
       </div>
     </div>
