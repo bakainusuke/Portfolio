@@ -25,52 +25,35 @@ function App() {
   };
 
   return (
-    <div className="d-flex flex-column min-vh-100 bg-light">
+    <div className="d-flex flex-column min-vh-100 bg-dark">
       <Router>
         <Navbar username={username} logoutUser={logoutUser} />
-        <main role="main">
-          <div className="container my-3">
+       
+          
             <Routes>
-              <Route
+              {/* <Route
                 path="/"
                 element={
                   username === null ? (
-                    <Navigate to="/login" />
+                    <Navigate to="/home" />
                   ) : (
-                    <Home username={username} />
+                    <Home />
                   )
                 }
-              />
+              /> */}
+              
+              
+              
               <Route
-                path="/login"
+                path="/home"
                 element={
-                  username === null ? (
-                    <Login loginUser={loginUser} />
-                  ) : (
-                    <Navigate to="/" />
-                  )
-                }
-              />
-              <Route
-                path="/signup"
-                element={
-                  username !== null ? (
-                    <Navigate to="/" />
-                  ) : (
-                    <Signup loginUser={loginUser} />
-                  )
-                }
-              />
-              <Route
-                path="/profile"
-                element={
-                  <MyProfile username={username} logoutUser={logoutUser} />
+                  <Home  />
                 }
               />
               <Route path="/forum" element={<Forum username={username} />} />
             </Routes>
-          </div>
-        </main>
+          
+        
         <Footer />
       </Router>
     </div>
